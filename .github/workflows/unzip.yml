@@ -1,0 +1,27 @@
+name: Unzip Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v3
+
+      - name: Install Unzip tool
+        run: sudo apt-get install unzip
+
+      - name: Unzip the project
+        run: unzip ig_scraper_project.zip -d ./
+
+      - name: Commit and push unzipped files
+        run: |
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Unzipped project"
+          git push
